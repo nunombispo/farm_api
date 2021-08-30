@@ -50,7 +50,7 @@ def get_api_router(app):
     async def get_task(id: str, request: Request):
         # We find our task and return it
         for task in tasks:
-            if task.id == id:
+            if task['_id'] == id:
                 return JSONResponse(status_code=status.HTTP_201_CREATED, content=task)
         # Return an error if no task if found
         raise HTTPException(status_code=404, detail=f"Task {id} not found")
@@ -60,21 +60,22 @@ def get_api_router(app):
     async def update_task(id: str, request: Request, task: TaskUpdateModel = Body(...)):
         # We encode our task with JSON
         new_task = jsonable_encoder(task)
+        new_task['_id'] = id
         # We find and update the task by removing the old one and inserting the new one
         for task in tasks:
-            if task.id == id:
+            if task['_id'] == id:
                 tasks.remove(task)
                 tasks.append(new_task)
-                return JSONResponse(status_code=status.HTTP_201_CREATED, content=update_task)
+                return JSONResponse(status_code=status.HTTP_201_CREATED, content=new_task)
         # Return an error if no task if found
         raise HTTPException(status_code=404, detail=f"Task {id} not found")
 
     # This path allows to delete a task
     @router.delete("/task/{id}", response_description="Delete Task")
-    async def update_task(id: str, request: Request):
-        # We find and update the task by removing the old one and inserting the new one
+    async def delete_task(id: str, request: Request):
+        # We find and remove the task
         for task in tasks:
-            if task.id == id:
+            if task['_id'] == id:
                 tasks.remove(task)
                 return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
         # Return an error if no task if found
