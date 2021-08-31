@@ -14,7 +14,7 @@ class ServerSettings(BaseSettings):
     PORT: int = 8000
 
 
-# Main Settings class that includes are the settings classes
+# Main Settings class that includes all the settings classes
 class Settings(CommonSettings, ServerSettings):
     pass
 
