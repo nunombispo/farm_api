@@ -16,8 +16,7 @@ class ServerSettings(BaseSettings):
 
 # Define the DatabaseSettings class (inherits from BaseSettings)
 class DatabaseSettings(BaseSettings):
-    DB_URL: str = "mongodb+srv://tasks_api_user:Bispo#2021@cluster0.rykfn.mongodb.net/tasksDatabase" \
-                  "?retryWrites=true&w=majority"
+    DB_URL: str = "mongodb+srv://<username>:<password>@<server>/tasksDatabase?retryWrites=true&w=majority"
     DB_NAME: str = "tasksDatabase"
 
 
