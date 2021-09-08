@@ -14,8 +14,15 @@ class ServerSettings(BaseSettings):
     PORT: int = 8000
 
 
+# Define the DatabaseSettings class (inherits from BaseSettings)
+class DatabaseSettings(BaseSettings):
+    DB_URL: str = "mongodb+srv://tasks_api_user:Bispo#2021@cluster0.rykfn.mongodb.net/tasksDatabase" \
+                  "?retryWrites=true&w=majority"
+    DB_NAME: str = "tasksDatabase"
+
+
 # Main Settings class that includes all the settings classes
-class Settings(CommonSettings, ServerSettings):
+class Settings(CommonSettings, ServerSettings, DatabaseSettings):
     pass
 
 
